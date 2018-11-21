@@ -15,6 +15,7 @@ namespace WaveFunctionCollapseEditor
     public partial class Form1 : Form
     {
         Model model;
+        Bitmap img;
         Random random = new Random();
         bool writingSettings;
         BackgroundWorker worker = new BackgroundWorker();
@@ -36,6 +37,8 @@ namespace WaveFunctionCollapseEditor
             worker.WorkerSupportsCancellation = true;
 
             saveFileDialog.AddExtension = true;
+
+            Size = new Size(733, 757);
         }
 
         private void cmdBrowse_Click(object sender, EventArgs e)
@@ -70,7 +73,7 @@ namespace WaveFunctionCollapseEditor
             else
                 txtLog.AppendText(msg);
         }
-        
+
         private void listSamples_SelectedIndexChanged(object sender, EventArgs e)
         {
             writingSettings = true;
@@ -92,7 +95,7 @@ namespace WaveFunctionCollapseEditor
                     oSymmetry.Value = xelem.Get("symmetry", 8);
                     oGround.Value = xelem.Get("ground", 0);
                     rOverlapping.Checked = true;
-                } 
+                }
                 else if (xelem.Name == "simpletiled")
                 {
                     stSubset.Text = xelem.Get<string>("subset");
@@ -151,13 +154,15 @@ namespace WaveFunctionCollapseEditor
                 cmdSaveText.Enabled = outstr.Length > 0;
                 cmdRun.Text = "Run";
 
-                if (picOutput.Image != null)
+                if (img != null)
                 {
-                    var X = 3;
-                    var Y = 3;
-                    var w = picOutput.Image.Width;
-                    var h = picOutput.Image.Height;
-                    picOutput.Size = new Size(w, h);
+                    picOutput.Image = zoomedImage(img, (int)zoom.Value);
+                    picOutput.Size = new Size(picOutput.Image.Width, picOutput.Image.Height);
+
+                    var X = 6;
+                    var Y = 6;
+                    var w = img.Width;
+                    var h = img.Height;
                     tiles.Size = new Size(w * X, h * Y);
                     tiles.Left = picOutput.Right + 12;
 
@@ -166,7 +171,7 @@ namespace WaveFunctionCollapseEditor
                         for (int y = 0; y < Y; y++)
                         {
                             var p = new PictureBox();
-                            p.Image = picOutput.Image;
+                            p.Image = img;
                             p.Size = new Size(w, h);
                             p.Location = new Point(x * w, y * h);
                             tiles.Controls.Add(p);
@@ -290,7 +295,7 @@ namespace WaveFunctionCollapseEditor
                 if (finished)
                 {
                     log("Finished");
-                    picOutput.Image = zoomedImage(model.Graphics(), (int)zoom.Value);
+                    img = model.Graphics();
                     outstr = (model is SimpleTiledModel && sTextOutput.Checked) ? (model as SimpleTiledModel).TextOutput() : "";
 
                     break;
