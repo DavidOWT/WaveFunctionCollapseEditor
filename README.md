@@ -1,3 +1,9 @@
+# WaveFunctionCollapseEditor
+A simple windows GUI for the original WaveFunctionCollapse library. You can browse the samples, edit settings and see the result directly. Calculations are done on a seperate thread.
+
+Documentation below is from the original library.
+
+
 # WaveFunctionCollapse
 This program generates bitmaps that are locally similar to the input bitmap.
 
