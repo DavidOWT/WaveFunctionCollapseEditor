@@ -1,6 +1,8 @@
 # WaveFunctionCollapseEditor
 A simple windows GUI for the original WaveFunctionCollapse library. You can browse the samples, edit settings and see the result directly. Calculations are done on a seperate thread.
 
+![GUI Screenshot](Misc/Screenshot01.png)
+
 Documentation below is from the original library.
 
 
