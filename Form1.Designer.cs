@@ -34,6 +34,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.picGroup = new System.Windows.Forms.FlowLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.sLimit = new System.Windows.Forms.NumericUpDown();
             this.sName = new System.Windows.Forms.TextBox();
@@ -75,6 +76,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.openImage = new System.Windows.Forms.OpenFileDialog();
+            this.cmdReload = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picOutput)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -107,12 +110,11 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox1.Controls.Add(this.picGroup);
             this.groupBox1.Controls.Add(this.panel3);
             this.groupBox1.Controls.Add(this.listSamples);
-            this.groupBox1.Controls.Add(this.cmdBrowse);
             this.groupBox1.Controls.Add(this.picInput);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
@@ -123,15 +125,18 @@
             // 
             // picGroup
             // 
-            this.picGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.picGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.picGroup.Location = new System.Drawing.Point(6, 385);
+            this.picGroup.Location = new System.Drawing.Point(6, 393);
             this.picGroup.Name = "picGroup";
-            this.picGroup.Size = new System.Drawing.Size(300, 288);
+            this.picGroup.Size = new System.Drawing.Size(300, 280);
             this.picGroup.TabIndex = 14;
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.cmdReload);
+            this.panel3.Controls.Add(this.label12);
+            this.panel3.Controls.Add(this.cmdBrowse);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.sLimit);
             this.panel3.Controls.Add(this.sName);
@@ -147,13 +152,22 @@
             this.panel3.Controls.Add(this.rOverlapping);
             this.panel3.Location = new System.Drawing.Point(136, 19);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(170, 344);
+            this.panel3.Size = new System.Drawing.Size(170, 368);
             this.panel3.TabIndex = 13;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(3, 8);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(36, 13);
+            this.label12.TabIndex = 29;
+            this.label12.Text = "Image";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 87);
+            this.label1.Location = new System.Drawing.Point(3, 111);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(28, 13);
             this.label1.TabIndex = 27;
@@ -161,7 +175,7 @@
             // 
             // sLimit
             // 
-            this.sLimit.Location = new System.Drawing.Point(70, 85);
+            this.sLimit.Location = new System.Drawing.Point(70, 109);
             this.sLimit.Name = "sLimit";
             this.sLimit.Size = new System.Drawing.Size(91, 20);
             this.sLimit.TabIndex = 26;
@@ -169,7 +183,7 @@
             // 
             // sName
             // 
-            this.sName.Location = new System.Drawing.Point(70, 7);
+            this.sName.Location = new System.Drawing.Point(70, 31);
             this.sName.Name = "sName";
             this.sName.Size = new System.Drawing.Size(91, 20);
             this.sName.TabIndex = 25;
@@ -178,7 +192,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 10);
+            this.label2.Location = new System.Drawing.Point(3, 34);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 24;
@@ -187,7 +201,7 @@
             // sPeriodic
             // 
             this.sPeriodic.AutoSize = true;
-            this.sPeriodic.Location = new System.Drawing.Point(6, 111);
+            this.sPeriodic.Location = new System.Drawing.Point(6, 135);
             this.sPeriodic.Name = "sPeriodic";
             this.sPeriodic.Size = new System.Drawing.Size(64, 17);
             this.sPeriodic.TabIndex = 23;
@@ -198,7 +212,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 61);
+            this.label9.Location = new System.Drawing.Point(3, 85);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(38, 13);
             this.label9.TabIndex = 20;
@@ -206,7 +220,7 @@
             // 
             // sHeight
             // 
-            this.sHeight.Location = new System.Drawing.Point(70, 59);
+            this.sHeight.Location = new System.Drawing.Point(70, 83);
             this.sHeight.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -225,7 +239,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 35);
+            this.label10.Location = new System.Drawing.Point(3, 59);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(35, 13);
             this.label10.TabIndex = 18;
@@ -233,7 +247,7 @@
             // 
             // sWidth
             // 
-            this.sWidth.Location = new System.Drawing.Point(70, 33);
+            this.sWidth.Location = new System.Drawing.Point(70, 57);
             this.sWidth.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -255,7 +269,7 @@
             this.panelTiled.Controls.Add(this.stSubset);
             this.panelTiled.Controls.Add(this.stBlack);
             this.panelTiled.Controls.Add(this.label3);
-            this.panelTiled.Location = new System.Drawing.Point(0, 153);
+            this.panelTiled.Location = new System.Drawing.Point(0, 177);
             this.panelTiled.Name = "panelTiled";
             this.panelTiled.Size = new System.Drawing.Size(161, 52);
             this.panelTiled.TabIndex = 16;
@@ -309,7 +323,7 @@
             this.panelOverlapping.Controls.Add(this.label4);
             this.panelOverlapping.Controls.Add(this.oN);
             this.panelOverlapping.Enabled = false;
-            this.panelOverlapping.Location = new System.Drawing.Point(0, 234);
+            this.panelOverlapping.Location = new System.Drawing.Point(0, 258);
             this.panelOverlapping.Name = "panelOverlapping";
             this.panelOverlapping.Size = new System.Drawing.Size(161, 106);
             this.panelOverlapping.TabIndex = 15;
@@ -366,6 +380,11 @@
             this.oSymmetry.Name = "oSymmetry";
             this.oSymmetry.Size = new System.Drawing.Size(91, 20);
             this.oSymmetry.TabIndex = 8;
+            this.oSymmetry.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.oSymmetry.ValueChanged += new System.EventHandler(this.settingChanged);
             // 
             // oPeriodicInput
@@ -397,63 +416,69 @@
             0,
             0});
             this.oN.Minimum = new decimal(new int[] {
-            100000,
+            1,
             0,
             0,
-            -2147483648});
+            0});
             this.oN.Name = "oN";
             this.oN.Size = new System.Drawing.Size(91, 20);
             this.oN.TabIndex = 4;
+            this.oN.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.oN.ValueChanged += new System.EventHandler(this.settingChanged);
             // 
             // rSimpleTiled
             // 
             this.rSimpleTiled.AutoSize = true;
             this.rSimpleTiled.Checked = true;
-            this.rSimpleTiled.Location = new System.Drawing.Point(3, 130);
+            this.rSimpleTiled.Location = new System.Drawing.Point(3, 154);
             this.rSimpleTiled.Name = "rSimpleTiled";
             this.rSimpleTiled.Size = new System.Drawing.Size(79, 17);
             this.rSimpleTiled.TabIndex = 14;
             this.rSimpleTiled.TabStop = true;
             this.rSimpleTiled.Text = "SimpleTiled";
             this.rSimpleTiled.UseVisualStyleBackColor = true;
+            this.rSimpleTiled.CheckedChanged += new System.EventHandler(this.rSimpleTiled_CheckedChanged_1);
             // 
             // rOverlapping
             // 
             this.rOverlapping.AutoSize = true;
-            this.rOverlapping.Location = new System.Drawing.Point(0, 211);
+            this.rOverlapping.Location = new System.Drawing.Point(0, 235);
             this.rOverlapping.Name = "rOverlapping";
             this.rOverlapping.Size = new System.Drawing.Size(82, 17);
             this.rOverlapping.TabIndex = 13;
             this.rOverlapping.Text = "Overlapping";
             this.rOverlapping.UseVisualStyleBackColor = true;
+            this.rOverlapping.CheckedChanged += new System.EventHandler(this.rOverlapping_CheckedChanged_1);
             // 
             // listSamples
             // 
             this.listSamples.FormattingEnabled = true;
-            this.listSamples.Location = new System.Drawing.Point(6, 19);
+            this.listSamples.Location = new System.Drawing.Point(8, 19);
             this.listSamples.Name = "listSamples";
-            this.listSamples.Size = new System.Drawing.Size(124, 342);
+            this.listSamples.Size = new System.Drawing.Size(122, 368);
             this.listSamples.TabIndex = 9;
             this.listSamples.SelectedIndexChanged += new System.EventHandler(this.listSamples_SelectedIndexChanged);
             // 
             // cmdBrowse
             // 
-            this.cmdBrowse.Location = new System.Drawing.Point(6, 19);
+            this.cmdBrowse.Location = new System.Drawing.Point(71, 3);
             this.cmdBrowse.Name = "cmdBrowse";
-            this.cmdBrowse.Size = new System.Drawing.Size(124, 26);
+            this.cmdBrowse.Size = new System.Drawing.Size(52, 22);
             this.cmdBrowse.TabIndex = 8;
             this.cmdBrowse.Text = "Browse";
             this.cmdBrowse.UseVisualStyleBackColor = true;
-            this.cmdBrowse.Visible = false;
             this.cmdBrowse.Click += new System.EventHandler(this.cmdBrowse_Click);
             // 
             // picInput
             // 
             this.picInput.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.picInput.Location = new System.Drawing.Point(6, 373);
+            this.picInput.Location = new System.Drawing.Point(6, 413);
             this.picInput.Name = "picInput";
-            this.picInput.Size = new System.Drawing.Size(124, 99);
+            this.picInput.Size = new System.Drawing.Size(300, 257);
             this.picInput.TabIndex = 7;
             this.picInput.TabStop = false;
             // 
@@ -479,7 +504,7 @@
             // 
             // txtLog
             // 
-            this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtLog.Location = new System.Drawing.Point(335, 12);
             this.txtLog.Multiline = true;
@@ -604,6 +629,16 @@
             this.label11.TabIndex = 34;
             this.label11.Text = "Seed";
             // 
+            // cmdReload
+            // 
+            this.cmdReload.Location = new System.Drawing.Point(129, 3);
+            this.cmdReload.Name = "cmdReload";
+            this.cmdReload.Size = new System.Drawing.Size(32, 23);
+            this.cmdReload.TabIndex = 30;
+            this.cmdReload.Text = "Re";
+            this.cmdReload.UseVisualStyleBackColor = true;
+            this.cmdReload.Click += new System.EventHandler(this.cmdReload_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -698,6 +733,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.OpenFileDialog openImage;
+        private System.Windows.Forms.Button cmdReload;
     }
 }
 

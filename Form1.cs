@@ -21,6 +21,8 @@ namespace WaveFunctionCollapseEditor
         BackgroundWorker worker = new BackgroundWorker();
         Queue<string> logQueue = new Queue<string>();
         string outstr = "";
+        DateTime start;
+        Bitmap bitmap;
 
         public Form1()
         {
@@ -44,7 +46,20 @@ namespace WaveFunctionCollapseEditor
         private void cmdBrowse_Click(object sender, EventArgs e)
         {
             if (openFile.ShowDialog() == DialogResult.OK)
+                cmdReload_Click(sender, e);
+        }
+
+        private void cmdReload_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                bitmap = (Bitmap)Bitmap.FromFile(openFile.FileName);
                 recalcWaveFunc();
+            }
+            catch (Exception er)
+            {
+                log($"Error loading file: {openFile.FileName}");
+            }
         }
 
         private void rSimpleTiled_CheckedChanged(object sender, EventArgs e)
@@ -88,6 +103,7 @@ namespace WaveFunctionCollapseEditor
                 sTextOutput.Checked = xelem.Get("textOutput", false);
                 if (xelem.Name == "overlapping")
                 {
+                    bitmap = (Bitmap)Bitmap.FromFile($"samples/{sName.Text}.png");
                     oN.Value = xelem.Get("N", 2);
                     sWidth.Value = xelem.Get("width", 48);
                     sHeight.Value = xelem.Get("height", 48);
@@ -213,6 +229,7 @@ namespace WaveFunctionCollapseEditor
                 return;
             worker.RunWorkerAsync();
             log("Started");
+            start = DateTime.Now;
             cmdRun.Text = "Cancel";
             update.Enabled = true;
             if (rndSeed.Checked)
@@ -220,20 +237,20 @@ namespace WaveFunctionCollapseEditor
 
             if (openFile.FileName.Length > 0)
             {
-                picInput.ImageLocation = openFile.FileName;
+                picInput.Image = zoomedImage((Bitmap)Bitmap.FromFile(openFile.FileName), (int)zoom.Value);
                 picInput.Visible = true;
                 picGroup.Visible = false;
             }
             else
             {
                 var path = "samples/" + sName.Text;
-                if (File.Exists(path + ".png"))
+                if (rOverlapping.Checked && File.Exists(path + ".png"))
                 {
-                    picInput.ImageLocation = path + ".png";
+                    picInput.Image = zoomedImage((Bitmap)Bitmap.FromFile(path + ".png"), (int)zoom.Value);
                     picInput.Visible = true;
                     picGroup.Visible = false;
                 }
-                else if (Directory.Exists(path)) // create picboxes for each file
+                else if (rSimpleTiled.Checked && Directory.Exists(path)) // create picboxes for each file
                 {
                     picInput.Visible = false;
                     picGroup.Visible = true;
@@ -247,6 +264,7 @@ namespace WaveFunctionCollapseEditor
                             var p = new PictureBox();
                             p.ImageLocation = item;
                             p.Load();
+                            p.Image = zoomedImage((Bitmap)p.Image, (int)zoom.Value);
                             p.Width = p.Image.Width;
                             p.Height = p.Image.Height;
                             picGroup.Controls.Add(p);
@@ -263,7 +281,7 @@ namespace WaveFunctionCollapseEditor
                 if (rSimpleTiled.Checked)
                     model = new SimpleTiledModel(sName.Text, stSubset.Text, (int)sWidth.Value, (int)sHeight.Value, sPeriodic.Checked, stBlack.Checked);
                 else if (rOverlapping.Checked)
-                    model = new OverlappingModel(sName.Text, (int)oN.Value, (int)sWidth.Value, (int)sHeight.Value, oPeriodicInput.Checked, sPeriodic.Checked, (int)oSymmetry.Value, (int)oGround.Value);
+                    model = new OverlappingModel(bitmap, (int)oN.Value, (int)sWidth.Value, (int)sHeight.Value, oPeriodicInput.Checked, sPeriodic.Checked, (int)oSymmetry.Value, (int)oGround.Value);
                 else
                     throw new NotImplementedException();
             }
@@ -294,7 +312,8 @@ namespace WaveFunctionCollapseEditor
 
                 if (finished)
                 {
-                    log("Finished");
+                    var time = DateTime.Now - start;
+                    log($"Finished in {time.TotalMilliseconds.ToString("0.0")} milliseconds");
                     img = model.Graphics();
                     outstr = (model is SimpleTiledModel && sTextOutput.Checked) ? (model as SimpleTiledModel).TextOutput() : "";
 
@@ -316,6 +335,18 @@ namespace WaveFunctionCollapseEditor
                 }
 
             }
+        }
+
+        private void rOverlapping_CheckedChanged_1(object sender, EventArgs e)
+        {
+            panelTiled.Enabled = false;
+            panelOverlapping.Enabled = true;
+        }
+
+        private void rSimpleTiled_CheckedChanged_1(object sender, EventArgs e)
+        {
+            panelTiled.Enabled = true;
+            panelOverlapping.Enabled = false;
         }
     }
 
